@@ -3,7 +3,17 @@ const { NotImplementedError } = require('../extensions/index.js');
 // const { ListNode } = require('../extensions/list-node.js');
 
 /**
- * Implement the Queue with a given interface via linked list (use ListNode extension above).
+ * Class representing a single node in a linked list.
+ */
+class ListNode {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
+
+/**
+ * Implement the Queue with a given interface via linked list.
  *
  * @example
  * const queue = new Queue();
@@ -14,23 +24,56 @@ const { NotImplementedError } = require('../extensions/index.js');
  * queue.getUnderlyingList() // returns { value: 3, next: null }
  */
 class Queue {
+  constructor() {
+    this.head = null; 
+    this.tail = null; 
+  }
 
+  /**
+   * Returns the underlying linked list.
+   * @returns {ListNode} The head of the linked list.
+   */
   getUnderlyingList() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.head;
   }
 
-  enqueue(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  /**
+   * Adds a value to the end of the queue.
+   * @param {*} value The value to add.
+   */
+  enqueue(value) {
+    const newNode = new ListNode(value);
+
+    if (this.tail) {
+      this.tail.next = newNode; 
+    }
+    this.tail = newNode; 
+
+    if (!this.head) {
+      this.head = newNode; 
+    }
   }
 
+  /**
+   * Removes and returns the value from the head of the queue.
+   * @returns {*} The value of the removed node, or undefined if the queue is empty.
+   */
   dequeue() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this.head) {
+      return undefined; 
+    }
+
+    const value = this.head.value;
+    this.head = this.head.next;
+
+    if (!this.head) {
+      this.tail = null; 
+    }
+
+    return value;
   }
 }
 
 module.exports = {
-  Queue
+  Queue,
 };
